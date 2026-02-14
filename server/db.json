@@ -1,0 +1,44 @@
+[
+    {
+        "name": "Начос",
+        "category": "Snacks",
+        "price": 250,
+        "weight": 220,
+        "img": "https://i.ibb.co/rK6ttTD0/photo-7.png"
+    },
+    {
+        "name": "Картошка фри",
+        "category": "Snacks",
+        "price": 245,
+        "weight": 180,
+        "img": "https://i.ibb.co/TMR20pwV/photo-8.png"
+    },
+    {
+        "name": "Луковые кольца",
+        "category": "Snacks",
+        "price": 230,
+        "weight": 160,
+        "img": "https://i.ibb.co/xKjqR4qF/photo-9.png"
+    },
+    {
+        "name": "Домашний хот-дог",
+        "category": "Hot-dogs",
+        "price": 290,
+        "weight": 250,
+        "img": "https://i.ibb.co/nsYptR99/photo-10.png"
+    },
+    {
+        "name": "Жгучий хот-дог",
+        "category": "Hot-dogs",
+        "price": 239,
+        "weight": 245,
+        "img": "https://i.ibb.co/yckxWsBY/photo-11.png"
+    },
+    {
+        "name": "Классический хот-дог",
+        "category": "Hot-dogs",
+        "price": 220,
+        "weight": 215,
+        "img": "https://i.ibb.co/1fjhCJG3/photo-12.png"
+    }
+]
