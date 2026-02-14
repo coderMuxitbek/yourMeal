@@ -11,3 +11,7 @@ body {
 .scrollbar-hide::-webkit-scrollbar {
   display: none;
 }
+
+.cart{
+  height: auto;
+}

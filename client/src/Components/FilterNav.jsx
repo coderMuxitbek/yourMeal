@@ -54,18 +54,18 @@ const filterBtnImgs = [
 function FilterNav({AddFilter}) {
     const [btnstate, setBtnState] = useState(null);
 
-    const ToggleBtnImg = (e) => {
-        e.stopPropagation();
+    const HandleBtnClick = (e) => {
+        AddFilter(e.target.name);
         setBtnState((prev) => e.target.name);
     }
 
     return (
-        <div className='w-[97%] overflow-x-scroll flex-nowrap overflow-y-clip flex gap-2 text-[16px] mt-7.5 ml-2.5 scrollbar-hide'>
+        <div className='w-full md:w-[91%] lg:w-[96.8%] xl:w-307.75 overflow-x-scroll flex-nowrap overflow-y-clip flex gap-2 md:gap-3 lg:gap-6 xl:gap-0 xl:justify-between text-[16px] mt-7.5 pl-2.5 lg:mt-10 md:ml-16 lg:ml-8 xl:ml-18.75 scrollbar-hide'>
             {filterBtnImgs.map((item, i) => {
                 return (
-                    <button onClick={(e) => AddFilter(e.target.name)} name={item.name} key={i} style={{ backgroundColor: btnstate === item.name ? "#FFAB08" : "#FFFFFF" }} className='h-10 flex flex-none items-center gap-2 px-2 rounded-3xl bg-[#FFFFFF] box-border border-2 border-transparent hover:border-2 hover:border-[#FFAB08]'>
-                        <img className='w-6 h-6' name={item.name} onClick={(e) => ToggleBtnImg(e)} src={item.img} alt={item.name} />
-                        <p className='text-[12px]'>{item.name}</p>
+                    <button onClick={(e) => HandleBtnClick(e)} name={item.name} key={i} style={{ backgroundColor: btnstate === item.name ? "#FFAB08" : "#FFFFFF" }} className='h-7.5 lg:h-10 flex flex-none items-center gap-2 px-2 lg:px-3.5 rounded-3xl bg-[#FFFFFF] box-border border-2 border-transparent hover:border-2 hover:border-[#FFAB08]'>
+                        <img className='w-6 h-6 pointer-events-none' src={item.img} alt={item.name} />
+                        <a className='text-[12px] lg:text-[16px] pointer-events-none'>{item.name}</a>
                     </button>
                 )
             })}

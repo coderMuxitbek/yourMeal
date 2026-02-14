@@ -4,6 +4,8 @@ import './App.css';
 import './index.css';
 import FilterNav from './Components/FilterNav.jsx';
 import LandingProducts from './Components/landingProducts.jsx';
+import ProdsLanding from './Components/ProdsLanding.jsx';
+import CartLanding from './Components/CartLanding.jsx';
 import FreshHeader from './Components/FreshHeader.jsx';
 import { useSearchParams } from 'react-router';
 
@@ -59,9 +61,10 @@ function App() {
   return (
     <div>
       <FreshHeader/>
-      <FilterNav/>
-      {/* <FilterNav AddFilter={AddFilter} />
-      <LandingProducts prods={prods} cartItems={cartItems} CalcTotalPrice={CalcTotalPrice} loading={loading} filteredCat={filteredCat} /> */}
+      <FilterNav AddFilter={AddFilter} />
+      {/* <LandingProducts prods={prods} cartItems={cartItems} CalcTotalPrice={CalcTotalPrice} loading={loading} filteredCat={filteredCat} /> */}
+      <CartLanding cartItems={cartItems} CalcTotalPrice={CalcTotalPrice} />
+      <ProdsLanding filteredCat={filteredCat}/>
     </div>
   )
 }
@@ -74,4 +77,20 @@ export default App;
 // "price": 550,
 // "weight": 512,
 // "img": "https://i.ibb.co/Zz62Lx4k/photo-1.png"
+// }
+
+// {
+// "name": "Мясная бомба",
+// "category": "Бургеры",
+// "price": 689,
+// "weight": 520,
+// "img": "https://i.ibb.co/BHWRRfQd/photo.png"
+// }
+
+// {
+// "name": "Тяжелый удар",
+// "category": "Бургеры",
+// "price": 480,
+// "weight": 470,
+// "img": "https://i.ibb.co/TDw1XnN0/photo-3.png"
 // }
