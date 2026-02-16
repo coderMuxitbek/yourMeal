@@ -4,7 +4,7 @@ import './App.css';
 import './index.css';
 import FilterNav from './Components/FilterNav.jsx';
 import ProdsLanding from './Components/ProdsLanding.jsx';
-import CartLanding from './Components/cartLanding.jsx';
+import CartLanding from './Components/CartLanding.jsx';
 import FreshHeader from './Components/FreshHeader.jsx';
 import { useSearchParams } from 'react-router';
 
