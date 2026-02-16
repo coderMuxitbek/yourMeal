@@ -3,9 +3,8 @@ import axios from 'axios';
 import './App.css';
 import './index.css';
 import FilterNav from './Components/FilterNav.jsx';
-import LandingProducts from './Components/landingProducts.jsx';
 import ProdsLanding from './Components/ProdsLanding.jsx';
-import CartLanding from './Components/CartLanding.jsx';
+import CartLanding from './Components/cartLanding.jsx';
 import FreshHeader from './Components/FreshHeader.jsx';
 import { useSearchParams } from 'react-router';
 
