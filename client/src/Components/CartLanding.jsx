@@ -5,19 +5,19 @@ function CartLanding({ cartItems, CalcTotalPrice }) {
     const [showCart, SetShowCart] = useState(false);
 
     return (
-        <div className="w-auto mx-2.5 bg-amber-400 rounded-[10px] px-2.5 pt-4 mt-7.5 md:mt-9">
-            <div className="flex items-center justify-between gap-32.25 pb-4" onClick={() => SetShowCart(prev => !prev)}>
-                <p className="text-[24px] font-semibold">Корзина</p>
-                <div className="w-10.25 h-5 bg-[#F2F2F3] rounded-[5px] text-center flex items-center justify-center text-[12px]">{cartItems.length}</div>
+        <div className={`${showCart ? "md:w-75" : "md:w-36.25"} lg:w-75 mx-2.5 md:ml-16 lg:mx-0 rounded-[10px] px-2.5 lg:px-4 pt-4 lg:pt-6 mt-7.5 md:mt-9 lg:mt-0 transition-all duration-300`}>
+            <div className="flex justify-between items-center pb-4 lg:pb-6" onClick={() => SetShowCart(prev => !prev)}>
+                <p className="text-[16px] lg:text-[24px] font-semibold">Корзина</p>
+                <div className="w-8 h-4 bg-[#F2F2F3] rounded-[5px] text-center flex items-center justify-center text-[10px]">{cartItems.length}</div>
             </div>
 
-            {<div className={`grid transition-all duration-300 ${showCart ? "grid-rows-[1fr] -mt-2" : "grid-rows-[0fr]"}`}>
+            {<div className={`grid transition-all duration-300 ${showCart ? "grid-rows-[1fr] -mt-3" : "lg:grid-rows-[1fr] lg:-mt-3 grid-rows-[0fr]"}`}>
                 <div className='overflow-hidden'>
                     {cartItems.map((item, i) => {
                         return (
                             <div style={{ borderTop: i === 0 ? "2px solid #F2F2F3" : "none" }} className="flex justify-between items-center py-3.75 border-b-2 border-[#F2F2F3]" key={i}>
                                 <div className="flex items-center gap-1.5">
-                                    <img className="w-16 h-13 rounded-[5px] object-cover" src={item.img} alt="" />
+                                    <img className="min-w-16 h-13 rounded-[5px] object-cover" src={item.img} alt="" />
                                     <div className="flex flex-col gap-1.5 text-[12px]">
                                         <div>
                                             <p>{item.name}</p>
