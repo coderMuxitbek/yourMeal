@@ -5,7 +5,7 @@ function CartLanding({ cartItems, CalcTotalPrice }) {
     const [showCart, SetShowCart] = useState(false);
 
     return (
-        <div className={`${showCart ? "md:w-75" : "md:w-36.25"} lg:w-75 mx-2.5 md:ml-16 lg:mx-0 rounded-[10px] px-2.5 lg:px-4 pt-4 lg:pt-6 mt-7.5 md:mt-9 lg:mt-0 transition-all duration-300`}>
+        <div className={`${showCart ? "md:w-75" : "md:w-36.25"} bg-[#FFFFFF] lg:w-75 mx-2.5 md:ml-16 lg:mx-0 rounded-[10px] px-2.5 lg:px-4 pt-4 lg:pt-6 mt-7.5 md:mt-9 lg:mt-0 transition-all duration-300`}>
             <div className="flex justify-between items-center pb-4 lg:pb-6" onClick={() => SetShowCart(prev => !prev)}>
                 <p className="text-[16px] lg:text-[24px] font-semibold">Корзина</p>
                 <div className="w-8 h-4 bg-[#F2F2F3] rounded-[5px] text-center flex items-center justify-center text-[10px]">{cartItems.length}</div>
@@ -26,7 +26,7 @@ function CartLanding({ cartItems, CalcTotalPrice }) {
                                         <p>{item.price}₽</p>
                                     </div>
                                 </div>
-                                <div className="flex gap-4 items-center justify-center w-21 h-10 bg-[#F2F2F3] rounded-[10px] text-[16px]">
+                                <div className="flex items-center justify-between w-18.5 lg:w-21 h-7.5 lg:h-10 py-1.75 lg:py-2.25 px-2 lg:px-3 bg-[#F2F2F3] rounded-[10px] text-[12px] lg:text-[16px]">
                                     <button>-</button>
                                     <p>1</p>
                                     <button>+</button>

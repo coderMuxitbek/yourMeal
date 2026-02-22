@@ -1,12 +1,10 @@
 import { useEffect, useState } from 'react';
+import { Routes, Route, useSearchParams, useLocation } from 'react-router';
 import axios from 'axios';
+import HomePage from './Pages/HomePage.jsx';
+import EachProduct from './Pages/EachProduct.jsx';
 import './App.css';
 import './index.css';
-import FilterNav from './Components/FilterNav.jsx';
-import ProdsLanding from './Components/ProdsLanding.jsx';
-import CartLanding from './Components/CartLanding.jsx';
-import FreshHeader from './Components/FreshHeader.jsx';
-import { useSearchParams } from 'react-router';
 
 function App() {
   const [prods, SetProds] = useState([]);
@@ -14,6 +12,14 @@ function App() {
   const [loading, SetLoading] = useState(false);
   const [searchParams, SetSearchParams] = useSearchParams("");
   const [filteredCat, SetFilteredCat] = useState([]);
+  const location = useLocation();
+  console.log(location);
+  
+
+  //// Making parallel intercepting routes with products list and product modal
+  const background = location.state?.backgroundLocation;
+
+
 
   useEffect(() => {
     SetLoading(true);
@@ -58,15 +64,16 @@ function App() {
 
 
   return (
-    <div>
-      <FreshHeader />
-      <FilterNav AddFilter={AddFilter} />
-      {/* <LandingProducts prods={prods} cartItems={cartItems} CalcTotalPrice={CalcTotalPrice} loading={loading} filteredCat={filteredCat} /> */}
-      <div className='lg:grid lg:grid-cols-3 xl:grid-cols-4 items-start lg:gap-7.5 lg:mx-8 xl:mx-18.75 lg:mt-30.5'>
-        <CartLanding cartItems={cartItems} CalcTotalPrice={CalcTotalPrice}/>
-        <ProdsLanding filteredCat={filteredCat} searchParams={searchParams} />
-      </div>
-    </div>
+    <>
+      <Routes location={background || location}>
+        <Route path='/' element={<HomePage AddFilter={AddFilter} cartItems={cartItems} CalcTotalPrice={CalcTotalPrice} filteredCat={filteredCat} searchParams={searchParams} />} />
+        <Route path="/prod/:id" element={<EachProduct/>}/>
+      </Routes>
+
+      {background && <Routes>
+        <Route path="/prod/:id" element={<EachProduct/>}/>
+      </Routes>}
+    </>
   )
 }
 
@@ -95,3 +102,84 @@ export default App;
 // "weight": 470,
 // "img": "https://i.ibb.co/TDw1XnN0/photo-3.png"
 // }
+
+
+
+
+
+
+// _id
+// 696ac47b168dc319c2d19909
+
+// ObjectId
+// name
+// Мясная бомба
+
+// String
+// category
+// Бургеры
+
+// String
+// price
+// 689
+
+// Int32
+// weight
+// 520
+
+// Int32
+// img
+// https://i.ibb.co/BHWRRfQd/photo.png
+
+// String
+
+
+// _id
+// 696ac486168dc319c2d1990b
+// name
+// "Супер сырный"
+// category
+// "Бургеры"
+// price
+// 550
+// weight
+// 512
+// img
+// "https://i.ibb.co/Zz62Lx4k/photo-1.png"
+// _id
+// 696c8a7ad476a6d30ccde887
+// name
+// "Cheesy"
+// category
+// "Бургеры"
+// price
+// 639
+// weight
+// 580
+// img
+// "https://i.ibb.co/p6KnmhJx/photo-2.png"
+// _id
+// 696c8bd0d476a6d30ccde889
+// name
+// "Тяжелый удар"
+// category
+// "Бургеры"
+// price
+// 480
+// weight
+// 470
+// img
+// "https://i.ibb.co/TDw1XnN0/photo-3.png"
+// _id
+// 696c8bead476a6d30ccde88b
+// name
+// "Вечная классика"
+// category
+// "Бургеры"
+// price
+// 450
+// weight
+// 450
+// img
+// "https://i.ibb.co/HTzt2Xm7/photo-4.png"
+

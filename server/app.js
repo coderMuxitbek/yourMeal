@@ -12,7 +12,7 @@ if (process.env.NODE_ENV !== "production") {
 }
 app.use(express());
 app.set("query parser", "extended");
-app.use("/", MealsRouter);
+app.use("/yourMeal", MealsRouter);
 
 
 if (process.env.NODE_ENV === "production") {
