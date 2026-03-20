@@ -1,11 +1,10 @@
 const mongoose = require("mongoose");
-const { Products } = require("../Model/mealModel.js");
+const { Carts } = require("../Model/cartModel.js");
 const ApiFeatures = require("../Utils/ApiFeatures.js");
 
-exports.GetMeals = async (req, res) => {
+exports.GetCartMeals = async (req, res) => {
     try {
-        const features = new ApiFeatures(Products.find(), req.query).sort().filter();
-        const meals = await features.queryObj;
+        const meals = await Carts.find();
 
         res.status(200).json({
             status: "success",
@@ -20,17 +19,20 @@ exports.GetMeals = async (req, res) => {
     }
 }
 
-exports.GetMeal = async (req, res, next) => {    
-    try {        
-        const meals = await Products.findById(req.params.id);        
+exports.AddToCart = async (req, res) => {
+    try {
+        const user = req.user;
+        const cartMeal = await Carts.create({ _id: req.body._id, futureOwner: user._id, qty: 1});
+        // user.mealsInCart.push(cartMeal._id);
+        // await user.save();
 
-        res.status(200).json({
+        res.status(201).json({
             status: "success",
-            meals
+            data: cartMeal
         });
 
     } catch (err) {
-        res.status(404).json({
+        res.json({
             status: "fail",
             message: err.message
         })

@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 
-const mealSchema = mongoose.Schema({
+const mealSchema = new mongoose.Schema({
     name: {
         type: String,
         required: [true, "Name is a required field"],
@@ -16,7 +16,4 @@ const mealSchema = mongoose.Schema({
     img: String
 });
 
-const cartMeals = mongoose.Schema();
-
-exports.Products = mongoose.model("products", mealSchema);
-exports.Carts = mongoose.model("carts", cartMeals);
+exports.Products = mongoose.model("Products", mealSchema);

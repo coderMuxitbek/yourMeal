@@ -5,6 +5,7 @@ import HomePage from './Pages/HomePage.jsx';
 import EachProduct from './Pages/EachProduct.jsx';
 import './App.css';
 import './index.css';
+import SignIn from './Pages/SignIn.jsx';
 
 function App() {
   const [prods, SetProds] = useState([]);
@@ -13,12 +14,10 @@ function App() {
   const [searchParams, SetSearchParams] = useSearchParams("");
   const [filteredCat, SetFilteredCat] = useState([]);
   const location = useLocation();
-  console.log(location);
   
 
   //// Making parallel intercepting routes with products list and product modal
   const background = location.state?.backgroundLocation;
-
 
 
   useEffect(() => {
@@ -66,12 +65,14 @@ function App() {
   return (
     <>
       <Routes location={background || location}>
-        <Route path='/' element={<HomePage AddFilter={AddFilter} cartItems={cartItems} CalcTotalPrice={CalcTotalPrice} filteredCat={filteredCat} searchParams={searchParams} />} />
+        <Route path='/' element={<HomePage AddFilter={AddFilter} cartItems={cartItems} CalcTotalPrice={CalcTotalPrice} filteredCat={filteredCat} searchParams={searchParams} loading={loading}/>} />
         <Route path="/prod/:id" element={<EachProduct/>}/>
+        <Route path='/signin' element={<SignIn/>}/>
       </Routes>
 
       {background && <Routes>
         <Route path="/prod/:id" element={<EachProduct/>}/>
+        <Route path='/signin' element={<SignIn/>}/>
       </Routes>}
     </>
   )

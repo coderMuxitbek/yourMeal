@@ -29,7 +29,7 @@ function EachProduct() {
         <div className="md:w-full md:h-full md:fixed top-0 left-0 bg-[#00000099]" onClick={() => navigate(-1)}>
             <div className="md:w-131 lg:w-171 lg:h-108 h-screen md:h-81 bg-[#FFFFFF] md:mx-auto md:mt-17.5 md:shadow-2xl md:rounded-3xl fixed md:static top-0 left-0">
                 <div className="w-full h-full relative px-2.5 md:px-4 lg:px-6 pt-8 md:pt-4 lg:pt-6 md:pb-6 lg:pb-9">
-                    <img size={24} className="absolute top-2.5 md:top-4 right-2.5 md:right-4" src={CloseIcon} alt="" onClick={() => BackWithImg(e)} />
+                    <img size={24} className="absolute top-2.5 md:top-4 right-2.5 md:right-4" src={CloseIcon} alt="" onClick={(e) => BackWithImg(e)} />
                     <div className="w-full flex flex-col items-start gap-3 md:gap-4 lg:gap-6">
                         <p className="text-[28px] lg:text-[40px] leading-[120%] font-semibold">{meal.name}</p>
                         <div className="flex flex-col md:flex-row gap-4 md:gap-2 lg:gap-4">
