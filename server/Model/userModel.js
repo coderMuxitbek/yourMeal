@@ -15,10 +15,10 @@ const userSchema = new mongoose.Schema({
         required: [true, "Password is a required field!"]
     },
     address: String,
-    mealsInCart: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Products"
-    }]
+    // mealsInCart: [{
+    //     type: mongoose.Schema.Types.ObjectId,
+    //     ref: "Products"
+    // }]
 });
 
 userSchema.pre("save", async function () {

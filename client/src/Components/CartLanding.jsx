@@ -1,14 +1,21 @@
 import { useState } from 'react';
 import FreeDeliveryImg from '../assets/images/free-icon-delivery-2362252.png';
+import Loader from './Loader.jsx';
 
-function CartLanding({ cartItems, CalcTotalPrice }) {
+function CartLanding({ cartItems, CalcTotalPrice, loading, AddToCart, RemoveCartItem }) {
     const [showCart, SetShowCart] = useState(false);
+
+    const CartSize = () => {
+        let size = 0;
+        cartItems.forEach((item) => size += item.qty);
+        return size;
+    }
 
     return (
         <div className={`${showCart ? "md:w-75" : "md:w-36.25"} bg-[#FFFFFF] lg:w-75 mx-2.5 md:ml-16 lg:mx-0 rounded-[10px] px-2.5 lg:px-4 pt-4 lg:pt-6 mt-7.5 md:mt-9 lg:mt-0 transition-all duration-300`}>
             <div className="flex justify-between items-center pb-4 lg:pb-6" onClick={() => SetShowCart(prev => !prev)}>
                 <p className="text-[16px] lg:text-[24px] font-semibold">Корзина</p>
-                <div className="w-8 h-4 bg-[#F2F2F3] rounded-[5px] text-center flex items-center justify-center text-[10px]">{cartItems.length}</div>
+                <div className="w-8 h-4 bg-[#F2F2F3] rounded-[5px] text-center flex items-center justify-center text-[10px]">{CartSize()}</div>
             </div>
 
             {<div className={`grid transition-all duration-300 ${showCart ? "grid-rows-[1fr] -mt-3" : "lg:grid-rows-[1fr] lg:-mt-3 grid-rows-[0fr]"}`}>
@@ -17,19 +24,19 @@ function CartLanding({ cartItems, CalcTotalPrice }) {
                         return (
                             <div style={{ borderTop: i === 0 ? "2px solid #F2F2F3" : "none" }} className="flex justify-between items-center py-3.75 border-b-2 border-[#F2F2F3]" key={i}>
                                 <div className="flex items-center gap-1.5">
-                                    <img className="min-w-16 h-13 rounded-[5px] object-cover" src={item.img} alt="" />
+                                    <img className="min-w-16 h-13 rounded-[5px] object-cover" src={item.product.img} alt="" />
                                     <div className="flex flex-col gap-1.5 text-[12px]">
                                         <div>
-                                            <p>{item.name}</p>
-                                            <p className="text-[#B1B1B1]">{item.weight}г</p>
+                                            <p>{item.product.name}</p>
+                                            <p className="text-[#B1B1B1]">{item.product.weight}г</p>
                                         </div>
-                                        <p>{item.price}₽</p>
+                                        <p>{item.product.price * item.qty}₽</p>
                                     </div>
                                 </div>
                                 <div className="flex items-center justify-between w-18.5 lg:w-21 h-7.5 lg:h-10 py-1.75 lg:py-2.25 px-2 lg:px-3 bg-[#F2F2F3] rounded-[10px] text-[12px] lg:text-[16px]">
-                                    <button>-</button>
-                                    <p>1</p>
-                                    <button>+</button>
+                                    <button onClick={() => RemoveCartItem(item.product)}>-</button>
+                                    <p>{item.qty}</p>
+                                    <button onClick={() => AddToCart(item.product)}>+</button>
                                 </div>
                             </div>)
                     })}

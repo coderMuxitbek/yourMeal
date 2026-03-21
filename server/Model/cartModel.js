@@ -1,11 +1,11 @@
 const mongoose = require("mongoose");
 
 const cartMeals = new mongoose.Schema({
-    _id: {
+    product: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Products"
     },
-    futureOwner: {
+    customer: {
         type: mongoose.Schema.Types.ObjectId,
         ref: "Users",
         unique: false
@@ -15,5 +15,9 @@ const cartMeals = new mongoose.Schema({
         unique: false
     }
 });
+
+cartMeals.pre("save", async function () {
+    if(this.qty >= 1){}
+})
 
 exports.Carts = mongoose.model("Carts", cartMeals);
