@@ -5,6 +5,6 @@ const AuthControllers = require("../Controllers/authControllers.js");
 
 router.get("/", AuthControllers.Protect, CartControllers.GetCartMeals);
 router.post("/", AuthControllers.Protect, CartControllers.AddToCart);
-router.delete("/", AuthControllers.Protect, CartControllers.RemoveCartProduct);
+router.delete("/:id", AuthControllers.Protect, CartControllers.RemoveCartProduct);
 
 module.exports = router;

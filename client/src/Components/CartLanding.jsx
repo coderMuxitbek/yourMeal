@@ -34,7 +34,7 @@ function CartLanding({ cartItems, CalcTotalPrice, loading, AddToCart, RemoveCart
                                     </div>
                                 </div>
                                 <div className="flex items-center justify-between w-18.5 lg:w-21 h-7.5 lg:h-10 py-1.75 lg:py-2.25 px-2 lg:px-3 bg-[#F2F2F3] rounded-[10px] text-[12px] lg:text-[16px]">
-                                    <button onClick={() => RemoveCartItem(item.product)}>-</button>
+                                    <button onClick={() => RemoveCartItem(item._id)}>-</button>
                                     <p>{item.qty}</p>
                                     <button onClick={() => AddToCart(item.product)}>+</button>
                                 </div>

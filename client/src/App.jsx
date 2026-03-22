@@ -72,10 +72,11 @@ function App() {
       })
   }
 
-  const RemoveCartItem = (item) => {
-    axios.delete("http://127.0.0.1:8000/yourMeal/cartMeals", item, { withCredentials: true})
+  const RemoveCartItem = (id) => {
+    axios.delete(`http://127.0.0.1:8000/yourMeal/cartMeals/${id}`, { withCredentials: true})
       .then((res) => {
         console.log(res);
+        GetCartMeals();
       }).catch((err) => {
         console.log(err);
       })

@@ -5,7 +5,7 @@ const ApiFeatures = require("../Utils/ApiFeatures.js");
 exports.GetCartMeals = async (req, res) => {
     try {
         const user = req.user;
-        const meals = await Carts.find({ customer: user._id }).populate("product");
+        const meals = (await Carts.find({ customer: user._id }).populate("product"));
         // const cartMeals = await Carts.find({ customer: user._id }).populate("_id");
         // const meals = cartMeals.map((item) => item._id);
 
@@ -25,7 +25,7 @@ exports.GetCartMeals = async (req, res) => {
 exports.AddToCart = async (req, res) => {
     try {
         const user = req.user;
-        const cartMeal = await Carts.findOneAndUpdate({product: req.body._id, customer: user._id}, { customer: user._id, $inc: { qty: 1 } }, { new: true, upsert: true });
+        const cartMeal = await Carts.findOneAndUpdate({ product: req.body._id, customer: user._id }, { customer: user._id, $inc: { qty: 1 } }, { new: true, upsert: true });
         // user.mealsInCart.push(cartMeal.product); ////// THESE TWO LINES ARE WRONG
         // await user.save();                       ////// ThESE TWO LINES ARE WRONG
 
@@ -44,10 +44,13 @@ exports.AddToCart = async (req, res) => {
 
 exports.RemoveCartProduct = async (req, res) => {
     try {
-        const user = req.user;
-        const meal = await Carts.findOneAndUpdate({product: req.body._id, customer: user._id}, {$inc: { qty: -1}});
-        
-        res.status(201).json({
+        const updatedMeal = await Carts.findOneAndUpdate({ _id: req.params.id }, { $inc: { qty: -1 } });
+
+        if (updatedMeal.qty === 1) {
+            await Carts.findByIdAndDelete(req.params.id);
+        }
+
+        res.status(204).json({
             status: "success",
         })
     } catch (err) {
