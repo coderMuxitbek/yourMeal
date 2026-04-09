@@ -6,6 +6,7 @@ import EachProduct from './Pages/EachProduct.jsx';
 import './App.css';
 import './index.css';
 import SignIn from './Pages/SignIn.jsx';
+import GetPhone from './Pages/GetPhone.jsx';
 
 function App() {
   const [prods, SetProds] = useState([]);
@@ -38,7 +39,7 @@ function App() {
     SetSearchParams(`?cat=${cat}`);
   }
 
-  const GetCartMeals = () => {  
+  const GetCartMeals = () => {
     SetLoading(true);
     axios.get("http://127.0.0.1:8000/yourMeal/cartMeals", { withCredentials: true })
       .then((res) => {
@@ -96,7 +97,7 @@ function App() {
     } else {
       myArray = myArray.filter((p) => p._id !== id);
       console.log("MYARRAY IS", myArray);
-      
+
     }
 
     localStorage.setItem("USER_CART_ARRAY_YOURMEAL", JSON.stringify(myArray));
@@ -132,7 +133,7 @@ function App() {
   const LogOut = () => {
     axios.delete("http://127.0.0.1:8000/yourMeal/auth", { withCredentials: true })
       .then((res) => {
-        console.log(res);
+        console.log("COOKIE CLEARED");
         GetCartMeals()
       }).catch((err) => {
         console.log(err);
@@ -154,11 +155,13 @@ function App() {
         <Route path='/' element={<HomePage AddFilter={AddFilter} cartItems={cartItems} CalcTotalPrice={CalcTotalPrice} filteredCat={filteredCat} searchParams={searchParams} loading={loading} prodLoading={prodLoading} AddToCart={AddToCart} RemoveCartItem={RemoveCartItem} LogOut={LogOut} />} />
         <Route path="/prod/:id" element={<EachProduct />} />
         <Route path='/signin' element={<SignIn />} />
+        <Route path='/phone' element={<GetPhone />} />
       </Routes>
 
       {background && <Routes>
         <Route path="/prod/:id" element={<EachProduct />} />
         <Route path='/signin' element={<SignIn />} />
+        <Route path='/phone' element={<GetPhone />} />
       </Routes>}
     </>
   )

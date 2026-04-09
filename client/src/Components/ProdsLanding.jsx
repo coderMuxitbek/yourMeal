@@ -2,10 +2,19 @@ import axios from 'axios';
 import { useEffect, useState } from 'react';
 import { Link, useLocation, useSearchParams } from 'react-router';
 import Loader from './Loader';
+import GetAddress from './GetAddress';
 
-
-function ProdsLanding({ filteredCat, searchParams, loading, AddToCart, prodLoading }) {
+function ProdsLanding({ filteredCat, searchParams, loading, AddToCart, prodLoading, haveAddress }) {
     const location = useLocation();
+    const [getAddress, SetGetAddress] = useState(false);
+
+    const CartOrAddress = (item) => {
+        if (haveAddress) {
+            AddToCart(item)
+        }else{
+            SetGetAddress(true);
+        }
+    }
 
     if (!prodLoading) {
         return (
@@ -27,12 +36,13 @@ function ProdsLanding({ filteredCat, searchParams, loading, AddToCart, prodLoadi
 
                                 <div className='flex flex-col gap-1.75 lg:gap-2'>
                                     <p className='font-semibold text-[12px] lg:text-[16px] leading-[130%] text-[#B1B1B1] h-4 lg:h-5.25'>{item.weight}г</p>
-                                    <button onClick={() => AddToCart(item)} className='w-full h-7.5 lg:h-10 flex items-center justify-center bg-[#F2F2F3] text-[12px] lg:text-[16px] rounded-[10px]'>Добавить</button>
+                                    <button onClick={() => CartOrAddress(item)} className='w-full h-7.5 lg:h-10 flex items-center justify-center bg-[#F2F2F3] text-[12px] lg:text-[16px] rounded-[10px]'>Добавить</button>
                                 </div>
                             </div>
                         )
                     })}
                 </div>
+                {getAddress && <GetAddress/>}
             </div>
         )
     } else {

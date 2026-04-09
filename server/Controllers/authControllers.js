@@ -35,13 +35,15 @@ exports.SignUp = async (req, res) => {
 }
 
 exports.LogOut = async (req, res) => {
+    
     const options = {
-        maxAge: process.env.LOGIN_EXPIRES,
         httpOnly: true,
         secure: true,
         sameSite: "none"
     }
+    
     res.clearCookie("jwt", options);
+    
     res.status(200).json({
         status: "success",
         message: "Logged out"
