@@ -16,7 +16,6 @@ function App() {
   const [filteredCat, SetFilteredCat] = useState([]);
   const location = useLocation();
 
-
   //// Making parallel intercepting routes with products list and product modal
   const background = location.state?.backgroundLocation;
 
@@ -24,8 +23,8 @@ function App() {
   useEffect(() => {
     SetLoading(true);
     SetProdLoading(true);
+    // localStorage.clear("USER_CART_ARRAY_YOURMEAL");
   }, []);
-
 
   const CalcTotalPrice = () => {
     let price = 0;
@@ -39,14 +38,17 @@ function App() {
     SetSearchParams(`?cat=${cat}`);
   }
 
-  const GetCartMeals = () => {
+  const GetCartMeals = () => {  
     SetLoading(true);
     axios.get("http://127.0.0.1:8000/yourMeal/cartMeals", { withCredentials: true })
       .then((res) => {
+        console.log(res);
         SetCartItems(res.data.meals);
-        SetLoading(false);
       }).catch((err) => {
-        console.log(err);
+        const storedMeals = JSON.parse(localStorage.getItem("USER_CART_ARRAY_YOURMEAL")) || [];
+        SetCartItems(storedMeals);
+      }).finally(() => {
+        SetLoading(false);
       })
   }
 
@@ -55,28 +57,83 @@ function App() {
     axios.get(searchParams.get("cat") ? `http://127.0.0.1:8000/yourMeal/products/?category=${searchParams.get("cat")}` : `http://127.0.0.1:8000/yourMeal/products`)
       .then((res) => {
         SetFilteredCat(res.data.meals);
+      }).catch((err) => {
+        console.log(err);
+      }).finally(() => {
         SetProdLoading(false);
       })
-      .catch((err) => {
-        console.log(err);
+  }
+
+  const AddToLocalStorage = (item) => {
+    const myArray = JSON.parse(localStorage.getItem("USER_CART_ARRAY_YOURMEAL")) || [];
+    const wantedMeal = myArray.find((el) => el.product._id === item._id);
+    localStorage.clear("USER_CART_ARRAY_YOURMEAL");
+
+    if (wantedMeal) {
+      myArray.forEach((meal) => {
+        if (meal.product._id === item._id) {
+          meal.qty = meal.qty + 1;
+        }
       })
+    } else {
+      myArray.push({ _id: item._id, product: item, customer: { name: "Pepe", email: "pepe@gmail.com", password: "pepe1234" }, qty: 1 });
+    }
+
+    localStorage.setItem("USER_CART_ARRAY_YOURMEAL", JSON.stringify(myArray));
+    console.log(JSON.parse(localStorage.getItem("USER_CART_ARRAY_YOURMEAL")));
+  }
+
+  const RemoveFromLocalStorage = (id) => {
+    let myArray = JSON.parse(localStorage.getItem("USER_CART_ARRAY_YOURMEAL")) || [];
+    const wantedMeal = myArray.find((el) => el._id === id);
+
+    if (wantedMeal.qty > 1) {
+      myArray.forEach((meal) => {
+        if (meal._id === id) {
+          meal.qty = meal.qty - 1;
+        }
+      })
+    } else {
+      myArray = myArray.filter((p) => p._id !== id);
+      console.log("MYARRAY IS", myArray);
+      
+    }
+
+    localStorage.setItem("USER_CART_ARRAY_YOURMEAL", JSON.stringify(myArray));
   }
 
   const AddToCart = (item) => {
     axios.post("http://127.0.0.1:8000/yourMeal/cartMeals", item, { withCredentials: true })
       .then((res) => {
         console.log(res);
-        GetCartMeals();
       }).catch((err) => {
-        console.log(err);
+        if (err.status === 401) {
+          AddToLocalStorage(item);
+        }
+      }).finally(() => {
+        GetCartMeals();
       })
   }
 
   const RemoveCartItem = (id) => {
-    axios.delete(`http://127.0.0.1:8000/yourMeal/cartMeals/${id}`, { withCredentials: true})
+    axios.delete(`http://127.0.0.1:8000/yourMeal/cartMeals/${id}`, { withCredentials: true })
       .then((res) => {
         console.log(res);
+      }).catch((err) => {
+        console.log(err);
+        if (err.status === 401) {
+          RemoveFromLocalStorage(id)
+        }
+      }).finally(() => {
         GetCartMeals();
+      })
+  }
+
+  const LogOut = () => {
+    axios.delete("http://127.0.0.1:8000/yourMeal/auth", { withCredentials: true })
+      .then((res) => {
+        console.log(res);
+        GetCartMeals()
       }).catch((err) => {
         console.log(err);
       })
@@ -94,7 +151,7 @@ function App() {
   return (
     <>
       <Routes location={background || location}>
-        <Route path='/' element={<HomePage AddFilter={AddFilter} cartItems={cartItems} CalcTotalPrice={CalcTotalPrice} filteredCat={filteredCat} searchParams={searchParams} loading={loading} prodLoading={prodLoading}  AddToCart={AddToCart} RemoveCartItem={RemoveCartItem} />} />
+        <Route path='/' element={<HomePage AddFilter={AddFilter} cartItems={cartItems} CalcTotalPrice={CalcTotalPrice} filteredCat={filteredCat} searchParams={searchParams} loading={loading} prodLoading={prodLoading} AddToCart={AddToCart} RemoveCartItem={RemoveCartItem} LogOut={LogOut} />} />
         <Route path="/prod/:id" element={<EachProduct />} />
         <Route path='/signin' element={<SignIn />} />
       </Routes>

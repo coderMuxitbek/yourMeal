@@ -3,7 +3,6 @@ const jwt = require("jsonwebtoken");
 const ErrorClass = require("../Utils/ErrorClass.js");
 const util = require("util");
 
-
 exports.SignUp = async (req, res) => {
     try {
         const user = await Users.create(req.body);
@@ -33,6 +32,20 @@ exports.SignUp = async (req, res) => {
             message: err.message
         })
     }
+}
+
+exports.LogOut = async (req, res) => {
+    const options = {
+        maxAge: process.env.LOGIN_EXPIRES,
+        httpOnly: true,
+        secure: true,
+        sameSite: "none"
+    }
+    res.clearCookie("jwt", options);
+    res.status(200).json({
+        status: "success",
+        message: "Logged out"
+    })
 }
 
 exports.Protect = async (req, res, next) => {

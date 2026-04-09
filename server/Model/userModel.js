@@ -8,11 +8,8 @@ const userSchema = new mongoose.Schema({
     },
     email: {
         type: String,
-        required: [true, "Email is a required field!"]
-    },
-    password: {
-        type: String,
-        required: [true, "Password is a required field!"]
+        required: [true, "Email is a required field!"],
+        unique: true
     },
     address: String,
     // mealsInCart: [{

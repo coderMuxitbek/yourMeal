@@ -46,7 +46,6 @@ function SignIn() {
                             <div className="flex flex-col gap-2">
                                 <input onChange={GetInputData} name="name" className="w-full md:w-75 lg:w-full h-7.5 lg:h-10 border pl-3 rounded-lg text-[10px] lg:text-[12px] leading-[130%] text-[#B1B1B1]" type="text" placeholder="Ваше имя" />
                                 <input onChange={GetInputData} name="email" className="w-full md:w-75 lg:w-full h-7.5 lg:h-10 border pl-3 rounded-lg text-[10px] lg:text-[12px] leading-[130%] text-[#B1B1B1]" type="text" placeholder="Аккаунт" />
-                                <input onChange={GetInputData} name="password" className="w-full md:w-75 lg:w-full h-7.5 lg:h-10 border pl-3 rounded-lg text-[10px] lg:text-[12px] leading-[130%] text-[#B1B1B1]" type="text" placeholder="Пароль" />
                             </div>
                         </div>
 

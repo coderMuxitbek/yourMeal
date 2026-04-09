@@ -16,8 +16,4 @@ const cartMeals = new mongoose.Schema({
     }
 });
 
-cartMeals.pre("save", async function () {
-    if(this.qty >= 1){}
-})
-
 exports.Carts = mongoose.model("Carts", cartMeals);

@@ -8,14 +8,15 @@ exports.GetCartMeals = async (req, res) => {
         const meals = (await Carts.find({ customer: user._id }).populate("product"));
         // const cartMeals = await Carts.find({ customer: user._id }).populate("_id");
         // const meals = cartMeals.map((item) => item._id);
+        
 
-        res.status(200).json({
+        res.json({
             status: "success",
             meals
         })
 
     } catch (err) {
-        res.status(404).json({
+        res.json({
             status: "fail",
             message: err.message
         })

@@ -1,16 +1,10 @@
-import { Link } from 'react-router-dom';
-import { useLocation } from 'react-router';
 import Logo from '../assets/images/logo.png';
 import HeaderBurger from '../assets/images/pic.png';
 
 function FreshHeader() {
-    const location = useLocation();
 
     return (
         <>
-            <Link to={"/signin"} state={{ backgroundLocation: location }}>
-                <div className='w-20 h-20 flex items-center justify-center rounded-[50%] bg-amber-400'>Sign in</div>
-            </Link>
             <div className='w-full h-121 md:h-87.5 lg:h-116.5 relative overflow-hidden flex flex-col items-center'>
                 <div className='w-152.75 h-152.75 md:w-635 md:h-635 flex flex-col justify-end gap-6 md:gap-5 items-center absolute bg-[#FFAB08] rounded-[100%] bottom-0 pb-[14%] md:pb-[6%] lg:pb-[6%] xl:pb-[4%]'>
                     <img width={150} src={Logo} alt="" />
