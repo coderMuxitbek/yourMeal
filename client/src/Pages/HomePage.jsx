@@ -8,11 +8,6 @@ import { useState } from 'react';
 
 function HomePage({ AddFilter, cartItems, CalcTotalPrice, filteredCat, searchParams, loading, prodLoading, AddToCart, RemoveCartItem, LogOut }) {
     const location = useLocation();
-    const [haveAddress, SetHaveAddress] = useState(false);
-
-    if(localStorage.getItem("USER_ADDRESS_YOURMEAL")){
-        SetHaveAddress(true);
-    }
 
     return (
         <div>
@@ -27,7 +22,7 @@ function HomePage({ AddFilter, cartItems, CalcTotalPrice, filteredCat, searchPar
             {/* <LandingProducts prods={prods} cartItems={cartItems} CalcTotalPrice={CalcTotalPrice} loading={loading} filteredCat={filteredCat} /> */}
             <div className='lg:grid lg:grid-cols-3 xl:grid-cols-4 items-start lg:gap-7.5 lg:mx-8 xl:mx-18.75 lg:mt-30.5'>
                 <CartLanding cartItems={cartItems} CalcTotalPrice={CalcTotalPrice} loading={loading} AddToCart={AddToCart} RemoveCartItem={RemoveCartItem} />
-                <ProdsLanding filteredCat={filteredCat} searchParams={searchParams} AddToCart={AddToCart} prodLoading={prodLoading} haveAddress={haveAddress}/>
+                <ProdsLanding filteredCat={filteredCat} searchParams={searchParams} AddToCart={AddToCart} prodLoading={prodLoading} />
             </div>
         </div>
     )

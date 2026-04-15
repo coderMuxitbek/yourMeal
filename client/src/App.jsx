@@ -24,7 +24,7 @@ function App() {
   useEffect(() => {
     SetLoading(true);
     SetProdLoading(true);
-    // localStorage.clear("USER_CART_ARRAY_YOURMEAL");
+    localStorage.clear("USER_ADDRESS_YOURMEAL");
   }, []);
 
   const CalcTotalPrice = () => {
@@ -68,7 +68,7 @@ function App() {
   const AddToLocalStorage = (item) => {
     const myArray = JSON.parse(localStorage.getItem("USER_CART_ARRAY_YOURMEAL")) || [];
     const wantedMeal = myArray.find((el) => el.product._id === item._id);
-    localStorage.clear("USER_CART_ARRAY_YOURMEAL");
+    localStorage.removeItem("USER_CART_ARRAY_YOURMEAL");
 
     if (wantedMeal) {
       myArray.forEach((meal) => {

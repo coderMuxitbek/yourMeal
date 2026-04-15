@@ -1,20 +1,24 @@
 import CloseIcon from "../assets/images/close.png";
 import DonutImg from "../assets/images/pic (1).png"
 import { useState } from "react";
-import { useEffect } from "react";
-import axios from "axios";
 
-
-function GetAddress() {
-    const [howOrder, SetHowOrder] = useState("delivery");
+function GetAddress({SetHaveAddress}) {
+    const [howOrder, SetHowOrder] = useState("Delivery");
+    const [address, SetAddress] = useState({});
 
     const GetInputData = (e) => {
         const name = e.target.name;
         const value = e.target.value;
 
-        SetUser((prev) => {
+        SetAddress((prev) => {
             return { ...prev, [name]: value }
         })
+    }
+
+    const SendAddress = () => {
+        localStorage.setItem("USER_ADDRESS_YOURMEAL", JSON.stringify(address));
+        SetHaveAddress(true);
+        console.log("have address");
     }
 
     return (
@@ -30,27 +34,31 @@ function GetAddress() {
                     <div className="h-full w-full lg:w-1/2 flex flex-col justify-between lg:items-center px-2.5 md:px-4 lg:px-6 pt-8 md:pt-5 lg:pt-11 pb-8 md:pb-7.25 lg:pb-6">
                         <div className="w-full flex flex-col gap-4.5 lg:gap-4">
                             <div className="flex items-center justify-between text-[16px] md:text-[16px] lg:text-[24px] font-semibold">
-                                <button onClick={() => SetHowOrder("delivery")} className={howOrder === "delivery" ? `bg-amber-500` : "bg-[#FFFFFF]"}>Delivery</button>
-                                <button onClick={() => SetHowOrder("pickup")} className={howOrder === "pickup" ? `bg-amber-500` : "bg-[#FFFFFF]"}>Pickup</button>
+                                <button onClick={() => SetHowOrder("Delivery")} className={howOrder === "delivery" ? `bg-amber-500` : "bg-[#FFFFFF]"}>Delivery</button>
+                                <button onClick={() => SetHowOrder("Pickup")} className={howOrder === "pickup" ? `bg-amber-500` : "bg-[#FFFFFF]"}>Pickup</button>
                             </div>
 
-                            {howOrder === "delivery" && <div className="flex flex-col gap-2">
-                                <input onChange={GetInputData} name="name" className="w-full md:w-75 lg:w-full h-7.5 lg:h-10 border pl-3 rounded-lg text-[10px] lg:text-[12px] leading-[130%] text-[#B1B1B1]" type="text" placeholder="Улица, дом, квартира" />
-                                <input onChange={GetInputData} name="name" className="w-full md:w-75 lg:w-full h-7.5 lg:h-10 border pl-3 rounded-lg text-[10px] lg:text-[12px] leading-[130%] text-[#B1B1B1]" type="text" placeholder="Улица, дом, квартира" />
+                            {howOrder === "Delivery" && <div className="flex flex-col gap-2">
+                                <input onChange={(e) => GetInputData(e)} name="street" className="w-full md:w-75 lg:w-full h-7.5 lg:h-10 border pl-3 rounded-lg text-[10px] lg:text-[12px] leading-[130%] text-[#B1B1B1]" type="text" placeholder="Улица, дом, квартира" />
+                                <div className="w-full md:w-75 lg:w-full flex justify-between text-[10px] lg:text-[12px] leading-[130%] text-[#B1B1B1]">
+                                    <input onChange={(e) => GetInputData(e)} name="floor" className="h-7.5 lg:h-10 border pl-3 rounded-lg" type="text" placeholder="Этаж" />
+                                    <input onChange={(e) => GetInputData(e)} name="doorPhone" className="h-7.5 lg:h-10 border pl-3 rounded-lg" type="text" placeholder="Домофон" />
+                                </div>
                             </div>}
-                            {howOrder === "pickup" && <div className="flex flex-col gap-2">
-                                <select className="w-full md:w-75 lg:w-full h-7.5 lg:h-10 border pl-3 rounded-lg text-[10px] lg:text-[12px] leading-[130%] text-[#B1B1B1]" name="District" id="">
-                                    <option value="">Olmazor</option>
-                                    <option value="">Yunusobod</option>
-                                    <option value="">Mirzo Ulug'bek</option>
-                                    <option value="">Chilonzor</option>
-                                    <option value="">Mirobod</option>
+
+                            {howOrder === "Pickup" && <div className="flex flex-col gap-2">
+                                <select onChange={(e) => GetInputData(e)} className="w-full md:w-75 lg:w-full h-7.5 lg:h-10 border pl-3 rounded-lg text-[10px] lg:text-[12px] leading-[130%] text-[#B1B1B1]" name="branchName" id="">
+                                    <option value="Olmazor">Olmazor</option>
+                                    <option value="Yunusobod">Yunusobod</option>
+                                    <option value="Mirzo Ulug'bek">Mirzo Ulug'bek</option>
+                                    <option value="Chilonzor">Chilonzor</option>
+                                    <option value="Mirobod">Mirobod</option>
                                 </select>
                             </div>}
                         </div>
 
-                        {howOrder === "delivery" && <button onClick={() => SignBtn()} className="w-full md:w-75 lg:w-full h-7.5 lg:h-10 md:static bg-[#FF7020] hover:bg-[#FFAB08] rounded-lg text-[12px] lg:text-[16px] text-[#FFFFFF]">Заказать сюда</button>}
-                        {howOrder === "pickup" && <button onClick={() => SignBtn()} className="w-full md:w-75 lg:w-full h-7.5 lg:h-10 md:static bg-[#FF7020] hover:bg-[#FFAB08] rounded-lg text-[12px] lg:text-[16px] text-[#FFFFFF]">Выбрать</button>}
+                        {howOrder === "Delivery" && <button onClick={() => SendAddress()} className="w-full md:w-75 lg:w-full h-7.5 lg:h-10 md:static bg-[#FF7020] hover:bg-[#FFAB08] rounded-lg text-[12px] lg:text-[16px] text-[#FFFFFF]">Заказать сюда</button>}
+                        {howOrder === "Pickup" && <button onClick={() => SendAddress()} className="w-full md:w-75 lg:w-full h-7.5 lg:h-10 md:static bg-[#FF7020] hover:bg-[#FFAB08] rounded-lg text-[12px] lg:text-[16px] text-[#FFFFFF]">Выбрать</button>}
                     </div>
                 </div>
             </div>
