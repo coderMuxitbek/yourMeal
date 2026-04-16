@@ -45,23 +45,7 @@ function SignIn() {
                             <h4 className="text-[16px] md:text-[16px] lg:text-[24px] font-semibold">Sign in</h4>
                             <div className="flex flex-col gap-2">
                                 <input onChange={GetInputData} name="name" className="w-full md:w-75 lg:w-full h-7.5 lg:h-10 border pl-3 rounded-lg text-[10px] lg:text-[12px] leading-[130%] text-[#B1B1B1]" type="text" placeholder="Ваше имя" />
-                                <input onChange={GetInputData} name="email" className="w-full md:w-75 lg:w-full h-7.5 lg:h-10 border pl-3 rounded-lg text-[10px] lg:text-[12px] leading-[130%] text-[#B1B1B1]" type="text" placeholder="Аккаунт" />
-                            </div>
-
-                            <div className="text-[10px]">
-                                <div className="flex items-center gap-2">
-                                    <input value="Самовывоз" name="Самовывоз" type="radio" />
-                                    <span>Самовывоз</span>
-                                </div>
-
-                                <div className="flex items-center gap-2">
-                                    <input value="Доставка" name="Доставка" type="radio" />
-                                    <span>Доставка</span>
-                                </div>
-                            </div>
-
-                            <div>
-                                <input onChange={GetInputData} name="name" className="w-full md:w-75 lg:w-full h-7.5 lg:h-10 border pl-3 rounded-lg text-[10px] lg:text-[12px] leading-[130%] text-[#B1B1B1]" type="text" placeholder="Улица, дом, квартира" />
+                                <input onChange={GetInputData} name="email" className="w-full md:w-75 lg:w-full h-7.5 lg:h-10 border pl-3 rounded-lg text-[10px] lg:text-[12px] leading-[130%] text-[#B1B1B1]" type="number" placeholder="Телефон" />
                             </div>
                         </div>
 

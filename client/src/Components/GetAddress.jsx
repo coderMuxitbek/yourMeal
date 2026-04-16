@@ -2,7 +2,7 @@ import CloseIcon from "../assets/images/close.png";
 import DonutImg from "../assets/images/pic (1).png"
 import { useState } from "react";
 
-function GetAddress({SetHaveAddress}) {
+function GetAddress({ SetAskAddress }) {
     const [howOrder, SetHowOrder] = useState("Delivery");
     const [address, SetAddress] = useState({});
 
@@ -15,10 +15,10 @@ function GetAddress({SetHaveAddress}) {
         })
     }
 
-    const SendAddress = () => {
+    const SaveAddress = () => {
         localStorage.setItem("USER_ADDRESS_YOURMEAL", JSON.stringify(address));
-        SetHaveAddress(true);
-        console.log("have address");
+        SetAskAddress(false);
+        console.log("We have address");
     }
 
     return (
@@ -31,18 +31,18 @@ function GetAddress({SetHaveAddress}) {
                         <img src={DonutImg} alt="" />
                     </div>
 
-                    <div className="h-full w-full lg:w-1/2 flex flex-col justify-between lg:items-center px-2.5 md:px-4 lg:px-6 pt-8 md:pt-5 lg:pt-11 pb-8 md:pb-7.25 lg:pb-6">
+                    <div className="h-full w-full lg:w-1/2 flex flex-col justify-between lg:items-center px-2.5 md:px-4 lg:px-6 pt-11 md:pt-14 lg:pt-16 pb-8 md:pb-7.25 lg:pb-6">
                         <div className="w-full flex flex-col gap-4.5 lg:gap-4">
-                            <div className="flex items-center justify-between text-[16px] md:text-[16px] lg:text-[24px] font-semibold">
-                                <button onClick={() => SetHowOrder("Delivery")} className={howOrder === "delivery" ? `bg-amber-500` : "bg-[#FFFFFF]"}>Delivery</button>
-                                <button onClick={() => SetHowOrder("Pickup")} className={howOrder === "pickup" ? `bg-amber-500` : "bg-[#FFFFFF]"}>Pickup</button>
+                            <div className="w-full md:w-75 lg:w-full flex items-center justify-between text-[16px] md:text-[16px] lg:text-[24px] font-semibold">
+                                <button onClick={() => SetHowOrder("Delivery")} className={howOrder === "Delivery" ? `bg-amber-500` : "bg-[#FFFFFF]"}>Delivery</button>
+                                <button onClick={() => SetHowOrder("Pickup")} className={howOrder === "Pickup" ? `bg-amber-500` : "bg-[#FFFFFF]"}>Pickup</button>
                             </div>
 
                             {howOrder === "Delivery" && <div className="flex flex-col gap-2">
                                 <input onChange={(e) => GetInputData(e)} name="street" className="w-full md:w-75 lg:w-full h-7.5 lg:h-10 border pl-3 rounded-lg text-[10px] lg:text-[12px] leading-[130%] text-[#B1B1B1]" type="text" placeholder="Улица, дом, квартира" />
                                 <div className="w-full md:w-75 lg:w-full flex justify-between text-[10px] lg:text-[12px] leading-[130%] text-[#B1B1B1]">
-                                    <input onChange={(e) => GetInputData(e)} name="floor" className="h-7.5 lg:h-10 border pl-3 rounded-lg" type="text" placeholder="Этаж" />
-                                    <input onChange={(e) => GetInputData(e)} name="doorPhone" className="h-7.5 lg:h-10 border pl-3 rounded-lg" type="text" placeholder="Домофон" />
+                                    <input onChange={(e) => GetInputData(e)} name="floor" className="w-[45%] h-7.5 lg:h-10 border pl-3 rounded-lg" type="text" placeholder="Этаж" />
+                                    <input onChange={(e) => GetInputData(e)} name="doorPhone" className="w-[45%] h-7.5 lg:h-10 border pl-3 rounded-lg" type="text" placeholder="Домофон" />
                                 </div>
                             </div>}
 
@@ -57,8 +57,15 @@ function GetAddress({SetHaveAddress}) {
                             </div>}
                         </div>
 
-                        {howOrder === "Delivery" && <button onClick={() => SendAddress()} className="w-full md:w-75 lg:w-full h-7.5 lg:h-10 md:static bg-[#FF7020] hover:bg-[#FFAB08] rounded-lg text-[12px] lg:text-[16px] text-[#FFFFFF]">Заказать сюда</button>}
-                        {howOrder === "Pickup" && <button onClick={() => SendAddress()} className="w-full md:w-75 lg:w-full h-7.5 lg:h-10 md:static bg-[#FF7020] hover:bg-[#FFAB08] rounded-lg text-[12px] lg:text-[16px] text-[#FFFFFF]">Выбрать</button>}
+
+                        <div className="w-full md:w-75 lg:w-full flex flex-col gap-2">
+                            <div className="flex gap-1 text-[12px] lg:text-[16px]">
+                                <p>Already have an account?</p>
+                                <a className="text-[#FF7020]">Sign in</a>
+                            </div>
+                            {howOrder === "Delivery" && <button onClick={() => SaveAddress()} className="h-7.5 lg:h-10 md:static bg-[#FF7020] hover:bg-[#FFAB08] rounded-lg text-[12px] lg:text-[16px] text-[#FFFFFF]">Заказать сюда</button>}
+                            {howOrder === "Pickup" && <button onClick={() => SaveAddress()} className="h-7.5 lg:h-10 md:static bg-[#FF7020] hover:bg-[#FFAB08] rounded-lg text-[12px] lg:text-[16px] text-[#FFFFFF]">Выбрать</button>}
+                        </div>
                     </div>
                 </div>
             </div>

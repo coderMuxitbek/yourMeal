@@ -4,13 +4,11 @@ import { Link, useLocation, useSearchParams } from 'react-router';
 import Loader from './Loader';
 import GetAddress from './GetAddress.jsx';
 
-function ProdsLanding({ filteredCat, searchParams, loading, AddToCart, prodLoading }) {
+function ProdsLanding({ filteredCat, searchParams, loading, AddToCart, prodLoading, askAddress, SetAskAddress }) {
     const location = useLocation();
-    const [haveAddress, SetHaveAddress] = useState(true);
 
     const Sth = (item) => {
         if(!localStorage.getItem("USER_ADDRESS_YOURMEAL")){            
-            SetHaveAddress(false);
             console.log("we do not have address");
         }else{
             AddToCart(item);
@@ -37,13 +35,13 @@ function ProdsLanding({ filteredCat, searchParams, loading, AddToCart, prodLoadi
 
                                 <div className='flex flex-col gap-1.75 lg:gap-2'>
                                     <p className='font-semibold text-[12px] lg:text-[16px] leading-[130%] text-[#B1B1B1] h-4 lg:h-5.25'>{item.weight}г</p>
-                                    <button onClick={() => Sth(item)} className='w-full h-7.5 lg:h-10 flex items-center justify-center bg-[#F2F2F3] text-[12px] lg:text-[16px] rounded-[10px]'>Добавить</button>
+                                    <button onClick={() => AddToCart(item)} className='w-full h-7.5 lg:h-10 flex items-center justify-center bg-[#F2F2F3] text-[12px] lg:text-[16px] rounded-[10px]'>Добавить</button>
                                 </div>
                             </div>
                         )
                     })}
                 </div>
-                {!haveAddress && <GetAddress SetHaveAddress={SetHaveAddress}/>}
+                {askAddress && <GetAddress SetAskAddress={SetAskAddress}/>}
             </div>
         )
     } else {

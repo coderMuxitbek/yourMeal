@@ -15,6 +15,7 @@ function App() {
   const [prodLoading, SetProdLoading] = useState(false);
   const [searchParams, SetSearchParams] = useSearchParams("");
   const [filteredCat, SetFilteredCat] = useState([]);
+  const [askAddress, SetAskAddress] = useState(false);
   const location = useLocation();
 
   //// Making parallel intercepting routes with products list and product modal
@@ -24,7 +25,7 @@ function App() {
   useEffect(() => {
     SetLoading(true);
     SetProdLoading(true);
-    localStorage.clear("USER_ADDRESS_YOURMEAL");
+    // localStorage.removeItem("USER_ADDRESS_YOURMEAL");
   }, []);
 
   const CalcTotalPrice = () => {
@@ -109,7 +110,11 @@ function App() {
         console.log(res);
       }).catch((err) => {
         if (err.status === 401) {
-          AddToLocalStorage(item);
+          if (localStorage.getItem("USER_ADDRESS_YOURMEAL")) {
+            AddToLocalStorage(item);
+          }else{
+            SetAskAddress(true);
+          }
         }
       }).finally(() => {
         GetCartMeals();
@@ -152,7 +157,7 @@ function App() {
   return (
     <>
       <Routes location={background || location}>
-        <Route path='/' element={<HomePage AddFilter={AddFilter} cartItems={cartItems} CalcTotalPrice={CalcTotalPrice} filteredCat={filteredCat} searchParams={searchParams} loading={loading} prodLoading={prodLoading} AddToCart={AddToCart} RemoveCartItem={RemoveCartItem} LogOut={LogOut} />} />
+        <Route path='/' element={<HomePage AddFilter={AddFilter} cartItems={cartItems} CalcTotalPrice={CalcTotalPrice} filteredCat={filteredCat} searchParams={searchParams} loading={loading} prodLoading={prodLoading} AddToCart={AddToCart} RemoveCartItem={RemoveCartItem} LogOut={LogOut} askAddress={askAddress} SetAskAddress={SetAskAddress}/>} />
         <Route path="/prod/:id" element={<EachProduct />} />
         <Route path='/signin' element={<SignIn />} />
         <Route path='/phone' element={<GetPhone />} />

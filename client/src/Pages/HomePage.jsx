@@ -6,7 +6,7 @@ import ProdsLanding from '../Components/ProdsLanding.jsx';
 import CartLanding from '../Components/CartLanding.jsx';
 import { useState } from 'react';
 
-function HomePage({ AddFilter, cartItems, CalcTotalPrice, filteredCat, searchParams, loading, prodLoading, AddToCart, RemoveCartItem, LogOut }) {
+function HomePage({ AddFilter, cartItems, CalcTotalPrice, filteredCat, searchParams, loading, prodLoading, AddToCart, RemoveCartItem, LogOut, askAddress, SetAskAddress }) {
     const location = useLocation();
 
     return (
@@ -22,7 +22,7 @@ function HomePage({ AddFilter, cartItems, CalcTotalPrice, filteredCat, searchPar
             {/* <LandingProducts prods={prods} cartItems={cartItems} CalcTotalPrice={CalcTotalPrice} loading={loading} filteredCat={filteredCat} /> */}
             <div className='lg:grid lg:grid-cols-3 xl:grid-cols-4 items-start lg:gap-7.5 lg:mx-8 xl:mx-18.75 lg:mt-30.5'>
                 <CartLanding cartItems={cartItems} CalcTotalPrice={CalcTotalPrice} loading={loading} AddToCart={AddToCart} RemoveCartItem={RemoveCartItem} />
-                <ProdsLanding filteredCat={filteredCat} searchParams={searchParams} AddToCart={AddToCart} prodLoading={prodLoading} />
+                <ProdsLanding filteredCat={filteredCat} searchParams={searchParams} AddToCart={AddToCart} prodLoading={prodLoading} askAddress={askAddress} SetAskAddress={SetAskAddress}/>
             </div>
         </div>
     )

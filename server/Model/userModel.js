@@ -4,18 +4,13 @@ const bcrypt = require("bcryptjs");
 const userSchema = new mongoose.Schema({
     name: {
         type: String,
-        required: [true, "Name is a required field!"]
     },
     email: {
         type: String,
-        required: [true, "Email is a required field!"],
-        unique: true
     },
-    address: String,
-    // mealsInCart: [{
-    //     type: mongoose.Schema.Types.ObjectId,
-    //     ref: "Products"
-    // }]
+    telephone: {
+        type: Number,
+    }
 });
 
 userSchema.pre("save", async function () {
