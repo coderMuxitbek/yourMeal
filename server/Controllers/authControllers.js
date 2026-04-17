@@ -5,7 +5,12 @@ const util = require("util");
 
 exports.SignUp = async (req, res) => {
     try {
-        const user = await Users.create(req.body);
+        const foundUser = await Users.findOne({ telephone: req.body.telephone });
+
+        if (!foundUser) {
+            const user = await Users.create(req.body);
+        }
+        
         const token = jwt.sign({ id: user._id },
             process.env.SECRET_STR,
             {
@@ -35,15 +40,15 @@ exports.SignUp = async (req, res) => {
 }
 
 exports.LogOut = async (req, res) => {
-    
+
     const options = {
         httpOnly: true,
         secure: true,
         sameSite: "none"
     }
-    
+
     res.clearCookie("jwt", options);
-    
+
     res.status(200).json({
         status: "success",
         message: "Logged out"

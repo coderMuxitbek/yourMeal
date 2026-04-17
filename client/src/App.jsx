@@ -6,7 +6,6 @@ import EachProduct from './Pages/EachProduct.jsx';
 import './App.css';
 import './index.css';
 import SignIn from './Pages/SignIn.jsx';
-import GetPhone from './Pages/GetPhone.jsx';
 
 function App() {
   const [prods, SetProds] = useState([]);
@@ -160,13 +159,11 @@ function App() {
         <Route path='/' element={<HomePage AddFilter={AddFilter} cartItems={cartItems} CalcTotalPrice={CalcTotalPrice} filteredCat={filteredCat} searchParams={searchParams} loading={loading} prodLoading={prodLoading} AddToCart={AddToCart} RemoveCartItem={RemoveCartItem} LogOut={LogOut} askAddress={askAddress} SetAskAddress={SetAskAddress}/>} />
         <Route path="/prod/:id" element={<EachProduct />} />
         <Route path='/signin' element={<SignIn />} />
-        <Route path='/phone' element={<GetPhone />} />
       </Routes>
 
       {background && <Routes>
         <Route path="/prod/:id" element={<EachProduct />} />
         <Route path='/signin' element={<SignIn />} />
-        <Route path='/phone' element={<GetPhone />} />
       </Routes>}
     </>
   )
