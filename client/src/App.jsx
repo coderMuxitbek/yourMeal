@@ -150,8 +150,7 @@ function App() {
 
   useEffect(() => {
     GetCartMeals();
-  }, [])
-
+  }, []);
 
   return (
     <>

@@ -1,10 +1,12 @@
 import CloseIcon from "../assets/images/close.png";
 import DonutImg from "../assets/images/pic (1).png"
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
 
 function GetAddress({ SetAskAddress }) {
     const [howOrder, SetHowOrder] = useState("Delivery");
     const [address, SetAddress] = useState({});
+    const [addressResArr, SetAddressResArr] = useState([]);
 
     const GetInputData = (e) => {
         const name = e.target.name;
@@ -21,8 +23,18 @@ function GetAddress({ SetAskAddress }) {
         console.log("We have address");
     }
 
+    useEffect(() => {
+        const data = axios.get(`https://nominatim.openstreetmap.org/search?q=${address.street}&format=json`)
+            .then((res) => {
+                console.log(res);
+                SetAddressResArr(res.data);
+            }).catch((err) => {
+                console.log(err);
+            })
+    }, [address.street])
+
     return (
-        <div className="md:w-full md:h-full md:fixed top-0 left-0 bg-[#00000099]">
+        <div className="md:w-full md:h-full md:fixed top-0 left-0 bg-[#00000099] flex">
             <div className="w-full md:w-65.5 lg:w-85.5 lg:h-108 h-screen md:h-81 bg-[#FFFFFF] md:mx-auto md:mt-17.5 lg:mt-22.5 md:shadow-2xl md:rounded-3xl overflow-hidden fixed md:static top-0 left-0" onClick={(e) => e.stopPropagation()}>
                 <div className="w-full h-full flex relative">
                     <img size={24} className="absolute top-2.5 md:top-4 lg:top-6 right-2.5 md:right-4 lg:right-6" src={CloseIcon} alt="" />
@@ -57,7 +69,6 @@ function GetAddress({ SetAskAddress }) {
                             </div>}
                         </div>
 
-
                         <div className="w-full md:w-75 lg:w-full flex flex-col gap-2">
                             <div className="flex gap-1 text-[12px] lg:text-[16px]">
                                 <p>Already have an account?</p>
@@ -68,6 +79,14 @@ function GetAddress({ SetAskAddress }) {
                         </div>
                     </div>
                 </div>
+            </div>
+
+            <div className="w-100 mx-auto flex flex-col gap-1">
+                {addressResArr.map((item, i) => {
+                    return (
+                        <p className="bg-amber-300" key={i}>{i, item.display_name}</p>
+                    )
+                })}
             </div>
         </div>
     )
