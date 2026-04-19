@@ -2,13 +2,21 @@ import { useState } from 'react';
 import FreeDeliveryImg from '../assets/images/free-icon-delivery-2362252.png';
 import Loader from './Loader.jsx';
 
-function CartLanding({ cartItems, CalcTotalPrice, loading, AddToCart, RemoveCartItem }) {
+function CartLanding({ cartItems, loading, AddToCart, RemoveCartItem }) {
     const [showCart, SetShowCart] = useState(false);
 
     const CartSize = () => {
         let size = 0;
         cartItems.forEach((item) => size += item.qty);
         return size;
+    }
+
+    const CalcTotalPrice = () => {
+        let price = 0;
+        cartItems.map((item) => {
+            price += item.product.price * item.qty;
+        });
+        return price;
     }
 
     return (

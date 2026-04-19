@@ -4,16 +4,38 @@ import { Link, useLocation, useSearchParams } from 'react-router';
 import Loader from './Loader';
 import GetAddress from './GetAddress.jsx';
 
-function ProdsLanding({ filteredCat, searchParams, loading, AddToCart, prodLoading, askAddress, SetAskAddress }) {
+function ProdsLanding({ loading, AddToCart, askAddress, SetAskAddress }) {
+    const [searchParams] = useSearchParams();
+    const [filteredCat, SetFilteredCat] = useState([]);
+    const [prodLoading, SetProdLoading] = useState(false);
     const location = useLocation();
 
     const Sth = (item) => {
-        if(!localStorage.getItem("USER_ADDRESS_YOURMEAL")){            
+        if (!localStorage.getItem("USER_ADDRESS_YOURMEAL")) {
             console.log("we do not have address");
-        }else{
+        } else {
             AddToCart(item);
         }
     }
+
+    const GetProducts = () => {
+        const url = "http://127.0.0.1:8000/yourMeal/products";
+        const cat = searchParams.get("cat");
+
+        SetProdLoading(true);
+        axios.get(url, { params: cat ? { category: cat } : {} })
+            .then((res) => {
+                SetFilteredCat(res.data.meals);
+            }).catch((err) => {
+                console.log(err);
+            }).finally(() => {
+                SetProdLoading(false);
+            })
+    }
+
+    useEffect(() => {
+        GetProducts()
+    }, [searchParams])
 
     if (!prodLoading) {
         return (
@@ -41,7 +63,7 @@ function ProdsLanding({ filteredCat, searchParams, loading, AddToCart, prodLoadi
                         )
                     })}
                 </div>
-                {askAddress && <GetAddress SetAskAddress={SetAskAddress}/>}
+                {askAddress && <GetAddress SetAskAddress={SetAskAddress} />}
             </div>
         )
     } else {

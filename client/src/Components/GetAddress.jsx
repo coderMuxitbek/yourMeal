@@ -24,10 +24,10 @@ function GetAddress({ SetAskAddress }) {
     }
 
     useEffect(() => {
-        const data = axios.get(`https://nominatim.openstreetmap.org/search?q=${address.street}&format=json`)
+        const data = axios.get(`https://api.geoapify.com/v1/geocode/search?city=${address.street}&apiKey=0993f9a905d24db6a70999d20ec52fe8`)
             .then((res) => {
                 console.log(res);
-                SetAddressResArr(res.data);
+                SetAddressResArr(res.data.features);
             }).catch((err) => {
                 console.log(err);
             })
@@ -84,7 +84,7 @@ function GetAddress({ SetAskAddress }) {
             <div className="w-100 mx-auto flex flex-col gap-1">
                 {addressResArr.map((item, i) => {
                     return (
-                        <p className="bg-amber-300" key={i}>{i, item.display_name}</p>
+                        <p className="bg-amber-300" key={i}>{i, item.properties.address_line1}</p>
                     )
                 })}
             </div>

@@ -8,12 +8,8 @@ import './index.css';
 import SignIn from './Pages/SignIn.jsx';
 
 function App() {
-  const [prods, SetProds] = useState([]);
   const [cartItems, SetCartItems] = useState([]);
   const [loading, SetLoading] = useState(false);
-  const [prodLoading, SetProdLoading] = useState(false);
-  const [searchParams, SetSearchParams] = useSearchParams("");
-  const [filteredCat, SetFilteredCat] = useState([]);
   const [askAddress, SetAskAddress] = useState(false);
   const location = useLocation();
 
@@ -23,21 +19,8 @@ function App() {
 
   useEffect(() => {
     SetLoading(true);
-    SetProdLoading(true);
     // localStorage.removeItem("USER_ADDRESS_YOURMEAL");
   }, []);
-
-  const CalcTotalPrice = () => {
-    let price = 0;
-    cartItems.map((item) => {
-      price += item.product.price * item.qty;
-    });
-    return price;
-  }
-
-  const AddFilter = (cat) => {
-    SetSearchParams(`?cat=${cat}`);
-  }
 
   const GetCartMeals = () => {
     SetLoading(true);
@@ -50,18 +33,6 @@ function App() {
         SetCartItems(storedMeals);
       }).finally(() => {
         SetLoading(false);
-      })
-  }
-
-  const GetProducts = () => {
-    SetProdLoading(true);
-    axios.get(searchParams.get("cat") ? `http://127.0.0.1:8000/yourMeal/products/?category=${searchParams.get("cat")}` : `http://127.0.0.1:8000/yourMeal/products`)
-      .then((res) => {
-        SetFilteredCat(res.data.meals);
-      }).catch((err) => {
-        console.log(err);
-      }).finally(() => {
-        SetProdLoading(false);
       })
   }
 
@@ -111,7 +82,7 @@ function App() {
         if (err.status === 401) {
           if (localStorage.getItem("USER_ADDRESS_YOURMEAL")) {
             AddToLocalStorage(item);
-          }else{
+          } else {
             SetAskAddress(true);
           }
         }
@@ -145,17 +116,13 @@ function App() {
   }
 
   useEffect(() => {
-    GetProducts();
-  }, [searchParams]);
-
-  useEffect(() => {
     GetCartMeals();
   }, []);
 
   return (
     <>
       <Routes location={background || location}>
-        <Route path='/' element={<HomePage AddFilter={AddFilter} cartItems={cartItems} CalcTotalPrice={CalcTotalPrice} filteredCat={filteredCat} searchParams={searchParams} loading={loading} prodLoading={prodLoading} AddToCart={AddToCart} RemoveCartItem={RemoveCartItem} LogOut={LogOut} askAddress={askAddress} SetAskAddress={SetAskAddress}/>} />
+        <Route path='/' element={<HomePage cartItems={cartItems} loading={loading} AddToCart={AddToCart} RemoveCartItem={RemoveCartItem} LogOut={LogOut} askAddress={askAddress} SetAskAddress={SetAskAddress} />} />
         <Route path="/prod/:id" element={<EachProduct />} />
         <Route path='/signin' element={<SignIn />} />
       </Routes>
