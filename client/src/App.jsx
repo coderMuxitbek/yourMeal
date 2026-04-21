@@ -128,7 +128,7 @@ function App() {
       </Routes>
 
       {background && <Routes>
-        <Route path="/prod/:id" element={<EachProduct AddToCart={AddToCart}/>} />
+        <Route path="/prod/:id" element={<EachProduct AddToCart={AddToCart} RemoveCartItem={RemoveCartItem}/>} />
         <Route path='/signin' element={<SignIn />} />
       </Routes>}
     </>

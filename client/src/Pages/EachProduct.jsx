@@ -4,7 +4,7 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import CloseIcon from "../assets/images/close.png";
 import { Link } from "react-router-dom";
 
-function EachProduct({AddToCart}) {
+function EachProduct({AddToCart, RemoveCartItem}) {
     const [meal, SetMeal] = useState({});
     const { id } = useParams();
     const { pathname } = useLocation();
@@ -50,7 +50,7 @@ function EachProduct({AddToCart}) {
                         <div className="w-full flex justify-between md:justify-start md:gap-2 lg:gap-4 text-[12px] lg:text-[16px]">
                             <button className="w-54.5 lg:w-69 h-7.5 lg:h-10 bg-[#FF7020] rounded-lg text-[#FFFFFF]">Добавить</button>
                             <div className="w-18.5 lg:w-21 h-7.5 lg:h-10 flex justify-between items-center bg-[#F2F2F3] rounded-lg py-1.75 px-2">
-                                <button>-</button>
+                                <button onClick={() => () => AddToCart(meal._id)}>-</button>
                                 <span>1</span>
                                 <button onClick={() => AddToCart(meal)}>+</button>
                             </div>
