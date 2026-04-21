@@ -19,7 +19,7 @@ function App() {
 
   useEffect(() => {
     SetLoading(true);
-    // localStorage.removeItem("USER_ADDRESS_YOURMEAL");
+     localStorage.removeItem("USER_ADDRESS_YOURMEAL");
   }, []);
 
   const GetCartMeals = () => {
@@ -123,12 +123,12 @@ function App() {
     <>
       <Routes location={background || location}>
         <Route path='/' element={<HomePage cartItems={cartItems} loading={loading} AddToCart={AddToCart} RemoveCartItem={RemoveCartItem} LogOut={LogOut} askAddress={askAddress} SetAskAddress={SetAskAddress} />} />
-        <Route path="/prod/:id" element={<EachProduct />} />
+        <Route path="/prod/:id" element={<EachProduct AddToCart={AddToCart}/>} />
         <Route path='/signin' element={<SignIn />} />
       </Routes>
 
       {background && <Routes>
-        <Route path="/prod/:id" element={<EachProduct />} />
+        <Route path="/prod/:id" element={<EachProduct AddToCart={AddToCart}/>} />
         <Route path='/signin' element={<SignIn />} />
       </Routes>}
     </>

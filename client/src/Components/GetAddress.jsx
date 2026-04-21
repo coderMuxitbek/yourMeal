@@ -6,7 +6,7 @@ import axios from "axios";
 function GetAddress({ SetAskAddress }) {
     const [howOrder, SetHowOrder] = useState("Delivery");
     const [address, SetAddress] = useState({});
-    const [addressResArr, SetAddressResArr] = useState([]);
+    const [suggestions, SetSuggestions] = useState([]);
 
     const GetInputData = (e) => {
         const name = e.target.name;
@@ -24,26 +24,32 @@ function GetAddress({ SetAskAddress }) {
     }
 
     useEffect(() => {
-        const data = axios.get(`https://api.geoapify.com/v1/geocode/search?city=${address.street}&apiKey=0993f9a905d24db6a70999d20ec52fe8`)
-            .then((res) => {
-                console.log(res);
-                SetAddressResArr(res.data.features);
-            }).catch((err) => {
-                console.log(err);
-            })
+        // if (address.street.length < 3) return;
+
+        const getData = setTimeout(async () => {
+            axios.get(`https://api.geoapify.com/v1/geocode/autocomplete?text=${address.street}&apiKey=0993f9a905d24db6a70999d20ec52fe8&filter=countrycode:uz`)
+                .then((res) => {
+                    console.log(res);
+                    SetSuggestions(res.data.features);
+                }).catch((err) => {
+                    console.log(err);
+                })
+        }, 400);
+
+        // return clearTimeout(getData);
     }, [address.street])
 
     return (
         <div className="md:w-full md:h-full md:fixed top-0 left-0 bg-[#00000099] flex">
-            <div className="w-full md:w-65.5 lg:w-85.5 lg:h-108 h-screen md:h-81 bg-[#FFFFFF] md:mx-auto md:mt-17.5 lg:mt-22.5 md:shadow-2xl md:rounded-3xl overflow-hidden fixed md:static top-0 left-0" onClick={(e) => e.stopPropagation()}>
+            <div className="w-full md:w-131 lg:w-171 lg:h-108 h-screen md:h-81 bg-[#FFFFFF] md:mx-auto md:mt-17.5 lg:mt-22.5 md:shadow-2xl md:rounded-3xl overflow-hidden fixed md:static top-0 left-0" onClick={(e) => e.stopPropagation()}>
                 <div className="w-full h-full flex relative">
                     <img size={24} className="absolute top-2.5 md:top-4 lg:top-6 right-2.5 md:right-4 lg:right-6" src={CloseIcon} alt="" />
 
-                    {/* <div className="bg-[#FFAB08] w-1/2 hidden lg:flex items-center justify-center">
+                    <div className="bg-[#FFAB08] w-1/2 hidden lg:flex items-center justify-center">
                         <img src={DonutImg} alt="" />
-                    </div> */}
+                    </div>
 
-                    <div className="h-full w-full flex flex-col justify-between lg:items-center px-2.5 md:px-4 lg:px-6 pt-11 md:pt-14 lg:pt-16 pb-8 md:pb-7.25 lg:pb-6">
+                    <div className="h-full w-1/2 flex flex-col justify-between lg:items-center px-2.5 md:px-4 lg:px-6 pt-11 md:pt-14 lg:pt-16 pb-8 md:pb-7.25 lg:pb-6">
                         <div className="w-full flex flex-col gap-4.5 lg:gap-4">
                             <div className="w-full md:w-75 lg:w-full flex items-center justify-between text-[16px] md:text-[16px] lg:text-[24px] font-semibold">
                                 <button onClick={() => SetHowOrder("Delivery")} className={howOrder === "Delivery" ? `bg-amber-500` : "bg-[#FFFFFF]"}>Delivery</button>
@@ -51,7 +57,17 @@ function GetAddress({ SetAskAddress }) {
                             </div>
 
                             {howOrder === "Delivery" && <div className="flex flex-col gap-2">
-                                <input onChange={(e) => GetInputData(e)} name="street" className="w-full md:w-75 lg:w-full h-7.5 lg:h-10 border pl-3 rounded-lg text-[10px] lg:text-[12px] leading-[130%] text-[#B1B1B1]" type="text" placeholder="Улица, дом, квартира" />
+                                <div>
+                                    <input onChange={(e) => GetInputData(e)} name="street" className="w-full md:w-75 lg:w-full h-7.5 lg:h-10 border pl-3 rounded-lg text-[10px] lg:text-[12px] leading-[130%] text-[#B1B1B1]" type="text" placeholder="Улица, дом, квартира" />
+                                    <ul className="flex flex-col gap-1">
+                                        {suggestions.map((place, i) => {
+                                            return <li key={i}>
+                                                <p>{place.properties.formatted}</p>
+                                                <hr />
+                                            </li>
+                                        })}
+                                    </ul>
+                                </div>
                                 <div className="w-full md:w-75 lg:w-full flex justify-between text-[10px] lg:text-[12px] leading-[130%] text-[#B1B1B1]">
                                     <input onChange={(e) => GetInputData(e)} name="floor" className="w-[45%] h-7.5 lg:h-10 border pl-3 rounded-lg" type="text" placeholder="Этаж" />
                                     <input onChange={(e) => GetInputData(e)} name="doorPhone" className="w-[45%] h-7.5 lg:h-10 border pl-3 rounded-lg" type="text" placeholder="Домофон" />
@@ -79,14 +95,6 @@ function GetAddress({ SetAskAddress }) {
                         </div>
                     </div>
                 </div>
-            </div>
-
-            <div className="w-100 mx-auto flex flex-col gap-1">
-                {addressResArr.map((item, i) => {
-                    return (
-                        <p className="bg-amber-300" key={i}>{i, item.properties.address_line1}</p>
-                    )
-                })}
             </div>
         </div>
     )
