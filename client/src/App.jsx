@@ -19,7 +19,7 @@ function App() {
 
   useEffect(() => {
     SetLoading(true);
-     localStorage.removeItem("USER_ADDRESS_YOURMEAL");
+    localStorage.removeItem("USER_ADDRESS_YOURMEAL");
   }, []);
 
   const GetCartMeals = () => {
@@ -31,6 +31,8 @@ function App() {
       }).catch((err) => {
         const storedMeals = JSON.parse(localStorage.getItem("USER_CART_ARRAY_YOURMEAL")) || [];
         SetCartItems(storedMeals);
+        console.log(err);
+        
       }).finally(() => {
         SetLoading(false);
       })
@@ -79,6 +81,8 @@ function App() {
       .then((res) => {
         console.log(res);
       }).catch((err) => {
+        console.log(err);
+        
         if (err.status === 401) {
           if (localStorage.getItem("USER_ADDRESS_YOURMEAL")) {
             AddToLocalStorage(item);
@@ -123,12 +127,12 @@ function App() {
     <>
       <Routes location={background || location}>
         <Route path='/' element={<HomePage cartItems={cartItems} loading={loading} AddToCart={AddToCart} RemoveCartItem={RemoveCartItem} LogOut={LogOut} askAddress={askAddress} SetAskAddress={SetAskAddress} />} />
-        <Route path="/prod/:id" element={<EachProduct AddToCart={AddToCart}/>} />
+        <Route path="/prod/:id" element={<EachProduct AddToCart={AddToCart} />} />
         <Route path='/signin' element={<SignIn />} />
       </Routes>
 
       {background && <Routes>
-        <Route path="/prod/:id" element={<EachProduct AddToCart={AddToCart} RemoveCartItem={RemoveCartItem}/>} />
+        <Route path="/prod/:id" element={<EachProduct AddToCart={AddToCart} RemoveCartItem={RemoveCartItem} />} />
         <Route path='/signin' element={<SignIn />} />
       </Routes>}
     </>

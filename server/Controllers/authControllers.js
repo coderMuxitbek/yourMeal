@@ -5,12 +5,17 @@ const util = require("util");
 
 exports.SignUp = async (req, res) => {
     try {
+        let user;
         const foundUser = await Users.findOne({ telephone: req.body.telephone });
+        user = foundUser;
 
         if (!foundUser) {
-            const user = await Users.create(req.body);
+            const createdUser = await Users.create(req.body);
+            console.log(createdUser);
+
+            user = createdUser;
         }
-        
+
         const token = jwt.sign({ id: user._id },
             process.env.SECRET_STR,
             {

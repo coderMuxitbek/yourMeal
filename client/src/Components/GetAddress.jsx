@@ -94,7 +94,7 @@ function GetAddress({ SetAskAddress }) {
                         <div className="w-full md:w-75 lg:w-full flex flex-col gap-2">
                             <div className="flex gap-1 text-[12px] lg:text-[16px]">
                                 <p>Already have an account?</p>
-                                <a className="text-[#FF7020]">Sign in</a>
+                                <a href="/signin" className="text-[#FF7020] cursor-pointer">Sign in</a>
                             </div>
                             {howOrder === "Delivery" && <button onClick={() => SaveAddress()} className="h-7.5 lg:h-10 md:static bg-[#FF7020] hover:bg-[#FFAB08] rounded-lg text-[12px] lg:text-[16px] text-[#FFFFFF]">Заказать сюда</button>}
                             {howOrder === "Pickup" && <button onClick={() => SaveAddress()} className="h-7.5 lg:h-10 md:static bg-[#FF7020] hover:bg-[#FFAB08] rounded-lg text-[12px] lg:text-[16px] text-[#FFFFFF]">Выбрать</button>}
