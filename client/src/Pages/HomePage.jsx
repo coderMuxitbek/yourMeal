@@ -6,7 +6,7 @@ import ProdsLanding from '../Components/ProdsLanding.jsx';
 import CartLanding from '../Components/CartLanding.jsx';
 import { useState } from 'react';
 
-function HomePage({ cartItems, loading, AddToCart, RemoveCartItem, LogOut, askAddress, SetAskAddress }) {
+function HomePage({ cartItems, loading, AddToCart, RemoveCartItem, LogOut }) {
     const location = useLocation();
 
     return (
@@ -21,7 +21,7 @@ function HomePage({ cartItems, loading, AddToCart, RemoveCartItem, LogOut, askAd
             <FilterNav/>
             <div className='lg:grid lg:grid-cols-3 xl:grid-cols-4 items-start lg:gap-7.5 lg:mx-8 xl:mx-18.75 lg:mt-30.5'>
                 <CartLanding cartItems={cartItems} loading={loading} AddToCart={AddToCart} RemoveCartItem={RemoveCartItem} />
-                <ProdsLanding AddToCart={AddToCart} askAddress={askAddress} SetAskAddress={SetAskAddress}/>
+                <ProdsLanding AddToCart={AddToCart}/>
             </div>
         </div>
     )

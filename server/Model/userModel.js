@@ -11,6 +11,11 @@ const userSchema = new mongoose.Schema({
     },
     telephone: {
         type: Number,
+    },
+    address: {
+        street: String,
+        floor: Number,
+        doorPhone: Number
     }
 });
 

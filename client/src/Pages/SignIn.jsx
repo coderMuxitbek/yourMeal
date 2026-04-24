@@ -19,17 +19,18 @@ function SignIn() {
     }
 
     const SignBtn = () => {
-        console.log(user);
-        
-        axios.post("http://127.0.0.1:8000/yourMeal/auth", user, {
+        axios.post("http://127.0.0.1:8000/yourMeal/auth", { ...user, address: localStorage.getItem("USER_ADDRESS_YOURMEAL") }, {
             withCredentials: true,
+        }).then((res) => {
+            console.log(res);
+            if (!res.data.user.address) {
+                navigate("/getAddress");
+            } else {
+                navigate(-1);
+            }
+        }).catch((err) => {
+            console.log(err);
         })
-            .then((res) => {
-                console.log(res);
-                // navigate(-1);
-            }).catch((err) => {
-                console.log(err);
-            })
     }
 
     return (

@@ -1,13 +1,15 @@
 import { useEffect, useState } from 'react';
-import { Routes, Route, useSearchParams, useLocation } from 'react-router';
+import { Routes, Route, useSearchParams, useLocation, useNavigate } from 'react-router';
 import axios from 'axios';
 import HomePage from './Pages/HomePage.jsx';
 import EachProduct from './Pages/EachProduct.jsx';
 import './App.css';
 import './index.css';
 import SignIn from './Pages/SignIn.jsx';
+import GetAddress from './Components/GetAddress.jsx';
 
 function App() {
+  const navigate = useNavigate();
   const [cartItems, SetCartItems] = useState([]);
   const [loading, SetLoading] = useState(false);
   const [askAddress, SetAskAddress] = useState(false);
@@ -32,7 +34,7 @@ function App() {
         const storedMeals = JSON.parse(localStorage.getItem("USER_CART_ARRAY_YOURMEAL")) || [];
         SetCartItems(storedMeals);
         console.log(err);
-        
+
       }).finally(() => {
         SetLoading(false);
       })
@@ -82,12 +84,12 @@ function App() {
         console.log(res);
       }).catch((err) => {
         console.log(err);
-        
+
         if (err.status === 401) {
           if (localStorage.getItem("USER_ADDRESS_YOURMEAL")) {
             AddToLocalStorage(item);
           } else {
-            SetAskAddress(true);
+            navigate("/getAddress");
           }
         }
       }).finally(() => {
@@ -128,12 +130,16 @@ function App() {
       <Routes location={background || location}>
         <Route path='/' element={<HomePage cartItems={cartItems} loading={loading} AddToCart={AddToCart} RemoveCartItem={RemoveCartItem} LogOut={LogOut} askAddress={askAddress} SetAskAddress={SetAskAddress} />} />
         <Route path="/prod/:id" element={<EachProduct AddToCart={AddToCart} />} />
-        <Route path='/signin' element={<SignIn />} />
+        <Route path='/signin' element={<SignIn SetAskAddress={SetAskAddress} />} />
+        <Route path='/getAddress' element={<GetAddress />} />
+
       </Routes>
 
       {background && <Routes>
         <Route path="/prod/:id" element={<EachProduct AddToCart={AddToCart} RemoveCartItem={RemoveCartItem} />} />
-        <Route path='/signin' element={<SignIn />} />
+        <Route path='/signin' element={<SignIn SetAskAddress={SetAskAddress} />} />
+        <Route path='/getAddress' element={<GetAddress />} />
+
       </Routes>}
     </>
   )

@@ -4,7 +4,7 @@ import { Link, useLocation, useSearchParams } from 'react-router';
 import Loader from './Loader';
 import GetAddress from './GetAddress.jsx';
 
-function ProdsLanding({ loading, AddToCart, askAddress, SetAskAddress }) {
+function ProdsLanding({ loading, AddToCart }) {
     const [searchParams] = useSearchParams();
     const [filteredCat, SetFilteredCat] = useState([]);
     const [prodLoading, SetProdLoading] = useState(false);
@@ -63,7 +63,6 @@ function ProdsLanding({ loading, AddToCart, askAddress, SetAskAddress }) {
                         )
                     })}
                 </div>
-                {askAddress && <GetAddress SetAskAddress={SetAskAddress} />}
             </div>
         )
     } else {

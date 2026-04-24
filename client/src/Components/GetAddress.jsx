@@ -3,7 +3,7 @@ import DonutImg from "../assets/images/pic (1).png"
 import { useState, useEffect } from "react";
 import axios from "axios";
 
-function GetAddress({ SetAskAddress }) {
+function GetAddress() {
     const [howOrder, SetHowOrder] = useState("Delivery");
     const [address, SetAddress] = useState({});
     const [suggestions, SetSuggestions] = useState([]);
@@ -29,7 +29,6 @@ function GetAddress({ SetAskAddress }) {
 
     const SaveAddress = () => {
         localStorage.setItem("USER_ADDRESS_YOURMEAL", JSON.stringify(address));
-        SetAskAddress(false);
         console.log("We have address");
     }
 

@@ -3,6 +3,23 @@ const jwt = require("jsonwebtoken");
 const ErrorClass = require("../Utils/ErrorClass.js");
 const util = require("util");
 
+const SendToken = (user) => {
+    const token = jwt.sign({ id: user._id },
+        process.env.SECRET_STR,
+        {
+            expiresIn: process.env.LOGIN_EXPIRES
+        });
+
+    const options = {
+        maxAge: process.env.LOGIN_EXPIRES,
+        httpOnly: true,
+        secure: true,
+        sameSite: "none"
+    }
+
+    res.cookie("jwt", token, options);
+}
+
 exports.SignUp = async (req, res) => {
     try {
         let user;
@@ -15,21 +32,7 @@ exports.SignUp = async (req, res) => {
 
             user = createdUser;
         }
-
-        const token = jwt.sign({ id: user._id },
-            process.env.SECRET_STR,
-            {
-                expiresIn: process.env.LOGIN_EXPIRES
-            });
-
-        const options = {
-            maxAge: process.env.LOGIN_EXPIRES,
-            httpOnly: true,
-            secure: true,
-            sameSite: "none"
-        }
-
-        res.cookie("jwt", token, options);
+        SendToken(user);
 
         res.status(201).json({
             status: "success",
